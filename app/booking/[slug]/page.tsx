@@ -5,13 +5,14 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { photographers } from "@/data/photographers";
-import { useState } from "react";
+import { useState, use } from "react";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import Link from "next/link";
 
-export default function BookingPage({ params }: { params: { slug: string } }) {
+export default function BookingPage({ params }: { params: Promise<{ slug: string }> }) {
     const router = useRouter();
-    const photographer = photographers.find((p) => p.slug === params.slug);
+    const { slug } = use(params);
+    const photographer = photographers.find((p) => p.slug === slug);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 

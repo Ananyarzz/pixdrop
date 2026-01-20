@@ -12,8 +12,9 @@ export function generateStaticParams() {
     }));
 }
 
-export default function PhotographerPortfolio({ params }: { params: { slug: string } }) {
-    const photographer = photographers.find((p) => p.slug === params.slug);
+export default async function PhotographerPortfolio({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const photographer = photographers.find((p) => p.slug === slug);
 
     if (!photographer) {
         notFound();
